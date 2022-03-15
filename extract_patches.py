@@ -36,12 +36,12 @@ if __name__ == "__main__":
     # consep, change the path appropriately if decided to 
     dataset_info = {
         "train": {
-            "img": (".png", "./hover_net/data/CoNSeP/Train/Images"),
-            "ann": (".mat", "./hover_net/data/CoNSeP/Train/Labels"),
+            "img": (".png", "./data/CoNSeP/Train/Images"),
+            "ann": (".mat", "./data/CoNSeP/Train/Labels"),
         },
         "valid": {
-            "img": (".png", "./hover_net/data/CoNSeP/Test/Images"),
-            "ann": (".mat", "./hover_net/data/CoNSeP/Test/Labels"),
+            "img": (".png", "./data/CoNSeP/Test/Images"),
+            "ann": (".mat", "./data/CoNSeP/Test/Labels"),
         },
     }
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         img_ext, img_dir = split_desc["img"]
         ann_ext, ann_dir = split_desc["ann"]
 
-        out_dir = "./hover_net/%s/%s/%s/%dx%d_%dx%d/" % (
+        out_dir = "./%s/%s/%s/%dx%d_%dx%d/" % (
             save_root,
             dataset_name,
             split_name,
