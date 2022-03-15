@@ -36,12 +36,12 @@ if __name__ == "__main__":
     # consep, change the path appropriately if decided to 
     dataset_info = {
         "train": {
-            "img": (".png", r".\data\CoNSeP\Train\Images"),
-            "ann": (".mat", r".\data\CoNSeP\Train\Labels"),
+            "img": (".png", "./hover_net/data/%s/Train/Images"% dataset_name),
+            "ann": (".mat", "./hover_net/data/%s/Train/Labels"% dataset_name),
         },
         "valid": {
-            "img": (".png", r".\data\CoNSeP\Test\Images"),
-            "ann": (".mat", r".\data\CoNSeP\Test\Labels"),
+            "img": (".png", "./hover_net/data/%s/Test/Images"% dataset_name),
+            "ann": (".mat", "./hover_net/data/%s/Test/Labels"% dataset_name),
         },
     }
 
