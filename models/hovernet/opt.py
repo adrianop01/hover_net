@@ -32,7 +32,7 @@ def get_config(nr_type, mode):
                     "net": {
                         "desc": lambda: create_model(
                             input_ch=3, nr_types=nr_type, 
-                            freeze=True, mode=mode
+                            freeze=False, mode=mode
                         ),
                         "optimizer": [
                             optim.Adam,
