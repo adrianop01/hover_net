@@ -51,11 +51,11 @@ class Config(object):
 
         dataset_name = "consep"
         self.train_dir_list = [
-            "./dataset/training_data/{}/{}/train/540x540_164x164".format(dataset_name,dataset_name)
+            "./dataset/{}/{}/train/540x540_164x164".format(dataset_name,dataset_name)
         ]
         self.valid_dir_list = [
             #test only
-            "./dataset/training_data/{}/{}/valid/540x540_164x164".format(dataset_name,dataset_name)
+            "./dataset/{}/{}/valid/540x540_164x164".format(dataset_name,dataset_name)
         ]
 
         self.shape_info = {
