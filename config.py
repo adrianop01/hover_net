@@ -33,7 +33,6 @@ class Config(object):
         # below config is for original mode. 
         # If original model mode is used, use [270,270] and [80,80] for act_shape and out_shape respectively
         # If fast model mode is used, use [256,256] and [164,164] for act_shape and out_shape respectively
-        aug_shape = [540, 540] # patch shape used during augmentation (larger patch may have less border artefacts)
         act_shape = [270, 270] # patch shape used as input to network - central crop performed after augmentation
         out_shape = [80, 80] # patch shape at output of network
 
@@ -44,18 +43,31 @@ class Config(object):
             if act_shape != [256,256] or out_shape != [164,164]:
                 raise Exception("If using `fast` mode, input shape must be [256,256] and output shape must be [164,164]")
 
-        self.dataset_name = "consep" # extracts dataset info from dataset.py
+        # self.dataset_name = "consep" # extracts dataset info from dataset.py
+        # self.log_dir = "logs/" # where checkpoints will be saved
+
+        # # paths to training and validation patches
+
+        # dataset_name = "consep"
+        # self.train_dir_list = [
+        #     "./dataset/{}/{}/train/540x540_164x164".format(dataset_name,dataset_name)
+        # ]
+        # self.valid_dir_list = [
+        #     #test only
+        #     "./dataset/{}/{}/valid/540x540_164x164".format(dataset_name,dataset_name)
+        # ]
+
+        self.dataset_name = "conic" # extracts dataset info from dataset.py
         self.log_dir = "logs/" # where checkpoints will be saved
 
         # paths to training and validation patches
 
-        dataset_name = "consep"
+        dataset_name = self.dataset_name
         self.train_dir_list = [
-            "./dataset/{}/{}/train/540x540_164x164".format(dataset_name,dataset_name)
+            "./dataset/{}/{}/train/270x270_256x256".format(dataset_name,dataset_name)
         ]
         self.valid_dir_list = [
-            #test only
-            "./dataset/{}/{}/valid/540x540_164x164".format(dataset_name,dataset_name)
+            "./dataset/{}/{}/valid/270x270_256x256".format(dataset_name,dataset_name)
         ]
 
         self.shape_info = {

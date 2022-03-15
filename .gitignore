@@ -4,6 +4,7 @@
 # directories
 cache/
 data/
+data_dev/
 dataset/
 exp_output/
 logs/
