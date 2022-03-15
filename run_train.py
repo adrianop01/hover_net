@@ -77,6 +77,8 @@ class TrainManager(Config):
         if using on headless machine or not
         """
         self.nr_gpus = 1
+        import matplotlib
+        matplotlib.use('TkAgg')
         import matplotlib.pyplot as plt
         check_manual_seed(self.seed)
         # TODO: what if each phase want diff annotation ?
@@ -295,7 +297,8 @@ class TrainManager(Config):
 if __name__ == "__main__":
     args = docopt(__doc__, version="HoVer-Net v1.0")
     trainer = TrainManager()
-
+    
+    #DO NOT DELETE
     if args["--view"]:
         if args["--view"] != "train" and args["--view"] != "valid":
             raise Exception('Use "train" or "valid" for --view.')
@@ -303,3 +306,6 @@ if __name__ == "__main__":
     else:
         os.environ["CUDA_VISIBLE_DEVICES"] = args["--gpu"]
         trainer.run()
+
+    #in vscode debug run below
+    # trainer.view_dataset("train")

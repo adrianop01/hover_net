@@ -3,8 +3,10 @@
 
 # directories
 cache/
+data/
 dataset/
 exp_output/
+logs/
 
 # checkpoint paths
 *.npz

@@ -42,17 +42,19 @@ class Config(object):
                 raise Exception("If using `original` mode, input shape must be [270,270] and output shape must be [80,80]")
         if model_mode == "fast":
             if act_shape != [256,256] or out_shape != [164,164]:
-                raise Exception("If using `original` mode, input shape must be [256,256] and output shape must be [164,164]")
+                raise Exception("If using `fast` mode, input shape must be [256,256] and output shape must be [164,164]")
 
         self.dataset_name = "consep" # extracts dataset info from dataset.py
         self.log_dir = "logs/" # where checkpoints will be saved
 
         # paths to training and validation patches
         self.train_dir_list = [
-            "train_patches_path"
+            #test only
+            r".\dataset\training_data\consep\consep\train\540x540_164x164"
         ]
         self.valid_dir_list = [
-            "valid_patches_path"
+            #test only
+            r".\dataset\training_data\consep\consep\valid\540x540_164x164"
         ]
 
         self.shape_info = {

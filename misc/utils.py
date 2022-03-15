@@ -3,6 +3,7 @@ import inspect
 import logging
 import os
 import shutil
+import pathlib
 
 import cv2
 import numpy as np
@@ -180,3 +181,27 @@ def remove_small_objects(pred, min_size=64, connectivity=1):
     out[too_small_mask] = 0
 
     return out
+
+
+def recur_find_ext(root_dir, ext_list):
+    """Recursively find all files in directories end with the `ext` such as `ext='.png'`.
+    Args:
+        root_dir (str): Root directory to grab filepaths from.
+        ext_list (list): File extensions to consider.
+    Returns:
+        file_path_list (list): sorted list of filepaths.
+    """
+    file_path_list = []
+    for cur_path, dir_list, file_list in os.walk(root_dir):
+        for file_name in file_list:
+            file_ext = pathlib.Path(file_name).suffix
+            if file_ext in ext_list:
+                full_path = os.path.join(cur_path, file_name)
+                file_path_list.append(full_path)
+    file_path_list.sort()
+    return file_path_list
+
+def rmdir(dir_path):
+    if os.path.isdir(dir_path):
+        shutil.rmtree(dir_path)
+    return

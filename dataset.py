@@ -95,6 +95,22 @@ class __CoNSeP(__AbstractDataset):
         return ann
 
 
+# #### TODO: implement this 
+# class __CoNIC(__AbstractDataset):
+#     """test dataset given by the CoNIC competition
+#     """
+
+#     def load_img(self, path):
+#         return cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2RGB)
+
+#     def load_ann(self, path, with_type=False):
+#         assert not with_type, "Not support"
+#         # assumes that ann is HxW
+#         ann_inst = sio.loadmat(path)["inst_map"]
+#         ann_inst = ann_inst.astype("int32")
+#         ann = np.expand_dims(ann_inst, -1)
+#         return ann
+
 ####
 def get_dataset(name):
     """Return a pre-defined dataset object associated with `name`."""

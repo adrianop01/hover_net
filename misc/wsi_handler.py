@@ -6,8 +6,8 @@ from skimage import color
 import re
 import subprocess
 
-import openslide
-
+# import openslide
+# TODO: figure a way to install openslide on local machine
 
 class FileHandler(object):
     def __init__(self):
@@ -102,40 +102,43 @@ class FileHandler(object):
 class OpenSlideHandler(FileHandler):
     """Class for handling OpenSlide supported whole-slide images."""
 
-    def __init__(self, file_path):
-        """file_path (string): path to single whole-slide image."""
-        super().__init__()
-        self.file_ptr = openslide.OpenSlide(file_path)  # load OpenSlide object
-        self.metadata = self.__load_metadata()
 
-        # only used for cases where the read magnification is different from
-        self.image_ptr = None  # the existing modes of the read file
-        self.read_level = None
+    def __init__(self, file_path):
+        raise  NotImplementedError("openslide not installed in this pc")
+        # """file_path (string): path to single whole-slide image."""
+        # super().__init__()
+        # self.file_ptr = openslide.OpenSlide(file_path)  # load OpenSlide object
+        # self.metadata = self.__load_metadata()
+
+        # # only used for cases where the read magnification is different from
+        # self.image_ptr = None  # the existing modes of the read file
+        # self.read_level = None
 
     def __load_metadata(self):
-        metadata = {}
+        pass
+        # metadata = {}
 
-        wsi_properties = self.file_ptr.properties
-        level_0_magnification = wsi_properties[openslide.PROPERTY_NAME_OBJECTIVE_POWER]
-        level_0_magnification = float(level_0_magnification)
+        # wsi_properties = self.file_ptr.properties
+        # level_0_magnification = wsi_properties[openslide.PROPERTY_NAME_OBJECTIVE_POWER]
+        # level_0_magnification = float(level_0_magnification)
 
-        downsample_level = self.file_ptr.level_downsamples
-        magnification_level = [level_0_magnification / lv for lv in downsample_level]
+        # downsample_level = self.file_ptr.level_downsamples
+        # magnification_level = [level_0_magnification / lv for lv in downsample_level]
 
-        mpp = [
-            wsi_properties[openslide.PROPERTY_NAME_MPP_X],
-            wsi_properties[openslide.PROPERTY_NAME_MPP_Y],
-        ]
-        mpp = np.array(mpp)
+        # mpp = [
+        #     wsi_properties[openslide.PROPERTY_NAME_MPP_X],
+        #     wsi_properties[openslide.PROPERTY_NAME_MPP_Y],
+        # ]
+        # mpp = np.array(mpp)
 
-        metadata = [
-            ("available_mag", magnification_level),  # highest to lowest mag
-            ("base_mag", magnification_level[0]),
-            ("vendor", wsi_properties[openslide.PROPERTY_NAME_VENDOR]),
-            ("mpp  ", mpp),
-            ("base_shape", np.array(self.file_ptr.dimensions)),
-        ]
-        return OrderedDict(metadata)
+        # metadata = [
+        #     ("available_mag", magnification_level),  # highest to lowest mag
+        #     ("base_mag", magnification_level[0]),
+        #     ("vendor", wsi_properties[openslide.PROPERTY_NAME_VENDOR]),
+        #     ("mpp  ", mpp),
+        #     ("base_shape", np.array(self.file_ptr.dimensions)),
+        # ]
+        # return OrderedDict(metadata)
 
     def read_region(self, coords, size):
         """Must call `prepare_reading` before hand.
@@ -149,45 +152,46 @@ class OpenSlideHandler(FileHandler):
                           `read_mag` or `read_mpp` from `prepare_reading`       
 
         """
-        if self.image_ptr is None:
-            # convert coord from read lv to lv zero
-            lv_0_shape = np.array(self.file_ptr.level_dimensions[0])
-            lv_r_shape = np.array(self.file_ptr.level_dimensions[self.read_lv])
-            up_sample = (lv_0_shape / lv_r_shape)[0]
-            new_coord = [0, 0]
-            new_coord[0] = int(coords[0] * up_sample)
-            new_coord[1] = int(coords[1] * up_sample)
-            region = self.file_ptr.read_region(new_coord, self.read_lv, size)
-        else:
-            region = self.image_ptr[
-                coords[1] : coords[1] + size[1], coords[0] : coords[0] + size[0]
-            ]
-        return np.array(region)[..., :3]
+        pass
+        # if self.image_ptr is None:
+        #     # convert coord from read lv to lv zero
+        #     lv_0_shape = np.array(self.file_ptr.level_dimensions[0])
+        #     lv_r_shape = np.array(self.file_ptr.level_dimensions[self.read_lv])
+        #     up_sample = (lv_0_shape / lv_r_shape)[0]
+        #     new_coord = [0, 0]
+        #     new_coord[0] = int(coords[0] * up_sample)
+        #     new_coord[1] = int(coords[1] * up_sample)
+        #     region = self.file_ptr.read_region(new_coord, self.read_lv, size)
+        # else:
+        #     region = self.image_ptr[
+        #         coords[1] : coords[1] + size[1], coords[0] : coords[0] + size[0]
+        #     ]
+        # return np.array(region)[..., :3]
 
     def get_full_img(self, read_mag=None, read_mpp=None):
         """Only use `read_mag` or `read_mpp`, not both, prioritize `read_mpp`.
 
         `read_mpp` is in X, Y format.
         """
+        pass
+        # read_lv, scale_factor = self._get_read_info(
+        #     read_mag=read_mag, read_mpp=read_mpp
+        # )
 
-        read_lv, scale_factor = self._get_read_info(
-            read_mag=read_mag, read_mpp=read_mpp
-        )
+        # read_size = self.file_ptr.level_dimensions[read_lv]
 
-        read_size = self.file_ptr.level_dimensions[read_lv]
-
-        wsi_img = self.file_ptr.read_region((0, 0), read_lv, read_size)
-        wsi_img = np.array(wsi_img)[..., :3]  # remove alpha channel
-        if scale_factor is not None:
-            # now rescale then return
-            if scale_factor > 1.0:
-                interp = cv2.INTER_CUBIC
-            else:
-                interp = cv2.INTER_LINEAR
-            wsi_img = cv2.resize(
-                wsi_img, (0, 0), fx=scale_factor, fy=scale_factor, interpolation=interp
-            )
-        return wsi_img
+        # wsi_img = self.file_ptr.read_region((0, 0), read_lv, read_size)
+        # wsi_img = np.array(wsi_img)[..., :3]  # remove alpha channel
+        # if scale_factor is not None:
+        #     # now rescale then return
+        #     if scale_factor > 1.0:
+        #         interp = cv2.INTER_CUBIC
+        #     else:
+        #         interp = cv2.INTER_LINEAR
+        #     wsi_img = cv2.resize(
+        #         wsi_img, (0, 0), fx=scale_factor, fy=scale_factor, interpolation=interp
+        #     )
+        # return wsi_img
 
 
 def get_file_handler(path, backend):
