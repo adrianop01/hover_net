@@ -52,7 +52,7 @@ if __name__ == "__main__":
         img_ext, img_dir = split_desc["img"]
         ann_ext, ann_dir = split_desc["ann"]
 
-        out_dir = "%s/%s/%s/%dx%d_%dx%d/" % (
+        out_dir = "./hover_net/%s/%s/%s/%dx%d_%dx%d/" % (
             save_root,
             dataset_name,
             split_name,
