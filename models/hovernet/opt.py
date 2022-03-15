@@ -125,7 +125,7 @@ def get_config(nr_type, mode):
             "valid": {
                 "dataset": "",  # whats about compound dataset ?
                 # "nr_procs": 8,  # number of threads for dataloader
-                "nr_procs": 1,  # number of threads for dataloader
+                "nr_procs": 8,  # number of threads for dataloader
                 "run_step": valid_step,
                 "reset_per_run": True,  # * to stop aggregating output etc. from last run
                 # callbacks are run according to the list order of the event
