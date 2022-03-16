@@ -94,10 +94,7 @@ if __name__ == "__main__":
 
         idx = np.array([np.abs(len(i[0])/(len(i[0])+len(i[1])) - train_size) for i in splits]).argmin()
         train_indices = splits[idx][0]
-        if fast_debug:
-            valid_indices = splits[idx][1][:100]
-        else:
-            valid_indices = splits[idx][1]
+        valid_indices = splits[idx][1]
         splits = splits[idx]
         joblib.dump(splits, f"./data/conic/split.dat") #dumping split information
 
