@@ -54,7 +54,8 @@ if __name__ == "__main__":
         cohort_sources = [v.split('_')[0] for v in img_sources]
         _, cohort_sources = np.unique(cohort_sources, return_inverse=True)
 
-        train_size = 0.8
+        # train_size = 0.8
+        train_size = 16/5000
 
         splitter = StratifiedShuffleSplit(
         n_splits=10,
