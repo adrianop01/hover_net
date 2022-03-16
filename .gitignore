@@ -3,10 +3,10 @@
 
 # directories
 cache/
-data/
+data/*
 data_dev/
 dataset/
-pretrained/
+pretrained/*
 exp_output/
 logs/
 
