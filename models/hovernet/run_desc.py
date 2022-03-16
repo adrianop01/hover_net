@@ -47,7 +47,7 @@ def train_step(batch_data, run_info):
     if model.module.nr_types is not None:
         true_tp = batch_data["tp_map"]
         true_tp = torch.squeeze(true_tp).to("cuda").type(torch.int64)
-        true_tp_onehot = F.one_hot(true_tp, num_classes=model.module.nr_types)
+        true_tp_onehot = F.one_hot(true_tp, num_classes=model.module.nr_types) #fuck...
         true_tp_onehot = true_tp_onehot.type(torch.float32)
         true_dict["tp"] = true_tp_onehot
 
