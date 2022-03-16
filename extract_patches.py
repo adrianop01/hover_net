@@ -26,7 +26,7 @@ if __name__ == "__main__":
     type_classification = True
 
     win_size = [270, 270]
-    step_size = [254, 254]
+    step_size = [256, 256]
     extract_type = "mirror"  # Choose 'mirror' or 'valid'. 'mirror'- use padding at borders. 'valid'- only extract from valid regions.
 
     # Name of dataset - use Kumar, CPM17, CoNSeP or conic.
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # a dictionary to specify where the dataset path should be changed.
     
     if dataset_name == "conic":
-        assert win_size == [270, 270] and step_size == [254, 254] and extract_type == "mirror" #conic size
+        assert win_size == [270, 270] and step_size == [256, 256] and extract_type == "mirror" #conic size
         #generating train/test splits and choose the best one
         info = pd.read_csv(f'./data/conic/patch_info.csv') #name of each images
         images_conic = np.load(f'./data/conic/images.npy')
