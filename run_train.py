@@ -313,17 +313,17 @@ class TrainManager(Config):
 if __name__ == "__main__":
     args = docopt(__doc__, version="HoVer-Net v1.0")
     trainer = TrainManager()
-    os.environ["CUDA_VISIBLE_DEVICES"] = args["--gpu"]
-    trainer.run()
+    # os.environ["CUDA_VISIBLE_DEVICES"] = args["--gpu"]
+    # trainer.run()
 
     #DO NOT DELETE
-    # if args["--view"]:
-    #     if args["--view"] != "train" and args["--view"] != "valid":
-    #         raise Exception('Use "train" or "valid" for --view.')
-    #     trainer.view_dataset(args["--view"])
-    # else:
-    #     os.environ["CUDA_VISIBLE_DEVICES"] = args["--gpu"]
-    #     trainer.run()
+    if args["--view"]:
+        if args["--view"] != "train" and args["--view"] != "valid":
+            raise Exception('Use "train" or "valid" for --view.')
+        trainer.view_dataset(args["--view"])
+    else:
+        os.environ["CUDA_VISIBLE_DEVICES"] = args["--gpu"]
+        trainer.run()
 
     #in vscode debug run below
     # trainer.view_dataset("train")
