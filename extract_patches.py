@@ -54,8 +54,11 @@ if __name__ == "__main__":
         cohort_sources = [v.split('_')[0] for v in img_sources]
         _, cohort_sources = np.unique(cohort_sources, return_inverse=True)
 
-        # train_size = 0.8
-        train_size = 0.05
+        fast_debug = 1
+        if fast_debug:
+            train_size = 0.05
+        else:
+            train_size = 0.8
 
         splitter = StratifiedShuffleSplit(
         n_splits=10,
@@ -91,7 +94,10 @@ if __name__ == "__main__":
 
         idx = np.array([np.abs(len(i[0])/(len(i[0])+len(i[1])) - train_size) for i in splits]).argmin()
         train_indices = splits[idx][0]
-        valid_indices = splits[idx][1]
+        if fast_debug:
+            valid_indices = splits[idx][1][:100]
+        else:
+            valid_indices = splits[idx][1]
         splits = splits[idx]
         joblib.dump(splits, f"./data/conic/split.dat") #dumping split information
 

@@ -17,6 +17,7 @@ from .targets import gen_targets, prep_sample
 from .net_desc import create_model
 from .run_desc import proc_valid_step_output, train_step, valid_step, viz_step_output
 
+fast_debug = 1
 
 # TODO: training config only ?
 # TODO: switch all to function name String for all option
@@ -57,45 +58,8 @@ def get_config(nr_type, mode):
                     },
                 },
                 "target_info": {"gen": (gen_targets, {}), "viz": (prep_sample, {})},
-                "batch_size": {"train": 4, "valid": 4,},  # engine name : value
-                "nr_epochs": 1,
-            },
-        ],
-
-        "phase_list": [
-            {
-                "run_info": {
-                    # may need more dynamic for each network
-                    "net": {
-                        "desc": lambda: create_model(
-                            input_ch=3, nr_types=nr_type, 
-                            freeze=True, mode=mode
-                        ),
-                        "optimizer": [
-                            optim.Adam,
-                            {  # should match keyword for parameters within the optimizer
-                                "lr": 1.0e-4,  # initial learning rate,
-                                "betas": (0.9, 0.999),
-                            },
-                        ],
-                        # learning rate scheduler
-                        "lr_scheduler": lambda x: optim.lr_scheduler.StepLR(x, 25),
-                        "extra_info": {
-                            "loss": {
-                                "np": {"bce": 1, "dice": 1},
-                                "hv": {"mse": 1, "msge": 1},
-                                "tp": {"bce": 1, "dice": 1},
-                            },
-                        },
-                        # path to load, -1 to auto load checkpoint from previous phase,
-                        # None to start from scratch
-                        "pretrained": "./pretrained/ImageNet-ResNet50-Preact_pytorch.tar",
-                        # 'pretrained': None,
-                    },
-                },
-                "target_info": {"gen": (gen_targets, {}), "viz": (prep_sample, {})},
-                "batch_size": {"train": 4, "valid": 4,},  # engine name : value
-                "nr_epochs": 1,
+                "batch_size": {"train": 1 if fast_debug else 4, "valid": 2 if fast_debug else 4,},  # engine name : value
+                "nr_epochs": 1 if fast_debug else 25,
             },
             {
                 "run_info": {
@@ -127,8 +91,8 @@ def get_config(nr_type, mode):
                     },
                 },
                 "target_info": {"gen": (gen_targets, {}), "viz": (prep_sample, {})},
-                "batch_size": {"train": 2, "valid": 2,}, # batch size per gpu
-                "nr_epochs": 1,
+                "batch_size": {"train": 1 if fast_debug else 2, "valid": 2 if fast_debug else 2,}, # batch size per gpu
+                "nr_epochs": 1 if fast_debug else 20,
             },
         ],
         # ------------------------------------------------------------------
