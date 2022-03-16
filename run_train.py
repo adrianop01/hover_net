@@ -13,6 +13,22 @@ Options:
   --gpu=<id>      Comma separated GPU list. [default: 0,1,2,3]
   --view=<dset>   Visualise images after augmentation. Choose 'train' or 'valid'.
 """
+# TODO: 
+# 1. convert real training file
+# 2. pretrained + 25 epoch (baseline)
+
+# train_step:
+# 1.make params easier to turn
+# 2.model architecture modification
+# 3.model training stages modficiation
+# 4.model target modification*
+# 5.model loss fx modification**
+
+# valid_step:
+# #make it work
+
+# Other:
+# 1.presentibility of code.
 
 import cv2
 

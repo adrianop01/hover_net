@@ -1,0 +1,10 @@
+1. convert real training file
+3. pretrained + 25 epoch (baseline)
+
+train_step
+
+#make params easier to turn
+#model architecture modification
+#model training stages modficiation
+#model target modification*
+#model loss fx modification**
