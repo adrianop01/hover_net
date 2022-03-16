@@ -96,20 +96,15 @@ class __CoNSeP(__AbstractDataset):
 
 
 # #### TODO: implement this 
-# class __CoNIC(__AbstractDataset):
-#     """test dataset given by the CoNIC competition
-#     """
+class __CoNIC(__AbstractDataset):
+    """test dataset given by the CoNIC competition
+    """
 
-#     def load_img(self, path):
-#         return cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2RGB)
+    def load_img(self, path):
+        raise ValueError()
 
-#     def load_ann(self, path, with_type=False):
-#         assert not with_type, "Not support"
-#         # assumes that ann is HxW
-#         ann_inst = sio.loadmat(path)["inst_map"]
-#         ann_inst = ann_inst.astype("int32")
-#         ann = np.expand_dims(ann_inst, -1)
-#         return ann
+    def load_ann(self, path, with_type=False):
+        raise ValueError()
 
 ####
 def get_dataset(name):
@@ -118,6 +113,7 @@ def get_dataset(name):
         "kumar": lambda: __Kumar(),
         "cpm17": lambda: __CPM17(),
         "consep": lambda: __CoNSeP(),
+        "conic": lambda: __CoNIC()
     }
     if name.lower() in name_dict:
         return name_dict[name]()
