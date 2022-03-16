@@ -32,7 +32,7 @@ def get_config(nr_type, mode):
                     "net": {
                         "desc": lambda: create_model(
                             input_ch=3, nr_types=nr_type, 
-                            freeze=False, mode=mode
+                            freeze=True, mode=mode
                         ),
                         "optimizer": [
                             optim.Adam,
@@ -57,8 +57,8 @@ def get_config(nr_type, mode):
                     },
                 },
                 "target_info": {"gen": (gen_targets, {}), "viz": (prep_sample, {})},
-                "batch_size": {"train": 16, "valid": 16,},  # engine name : value
-                "nr_epochs": 50,
+                "batch_size": {"train": 4, "valid": 4,},  # engine name : value
+                "nr_epochs": 25,
             },
             {
                 "run_info": {
@@ -90,8 +90,8 @@ def get_config(nr_type, mode):
                     },
                 },
                 "target_info": {"gen": (gen_targets, {}), "viz": (prep_sample, {})},
-                "batch_size": {"train": 16, "valid": 16,}, # batch size per gpu
-                "nr_epochs": 50,
+                "batch_size": {"train": 4, "valid": 4,}, # batch size per gpu
+                "nr_epochs": 25,
             },
         ],
         # ------------------------------------------------------------------
