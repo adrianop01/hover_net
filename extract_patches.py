@@ -114,7 +114,7 @@ if __name__ == "__main__":
                 img = images_conic[idx]
                 label = labels_conic[idx]
                 img_label = np.concatenate([img, label], axis=2)
-                img_label = np.pad(img_label,((7,),(7,),(0,)),mode="reflect") #pad to 270x270
+                img_label = np.pad(img_label,((7,),(7,),(0,)),mode="reflect") #256x256 pad to 270x270
                 np.save("{0}/{1}_{2:03d}.npy".format(str(out_dir), "train" if c1==0 else "valid", c), img_label)
 
     else:
