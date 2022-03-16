@@ -52,7 +52,7 @@ def get_config(nr_type, mode):
                         },
                         # path to load, -1 to auto load checkpoint from previous phase,
                         # None to start from scratch
-                        "pretrained": "../pretrained/hovernet_original_consep_type_tf2pytorch.tar",
+                        "pretrained": "./pretrained/hovernet_original_consep_type_tf2pytorch.tar",
                         # 'pretrained': None,
                     },
                 },
