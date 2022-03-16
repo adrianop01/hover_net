@@ -55,7 +55,7 @@ if __name__ == "__main__":
         _, cohort_sources = np.unique(cohort_sources, return_inverse=True)
 
         # train_size = 0.8
-        train_size = 16/5000
+        train_size = 0.05
 
         splitter = StratifiedShuffleSplit(
         n_splits=10,
